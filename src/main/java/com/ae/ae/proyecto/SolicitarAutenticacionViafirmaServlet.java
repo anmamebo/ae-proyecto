@@ -38,7 +38,7 @@ public class SolicitarAutenticacionViafirmaServlet extends HttpServlet {
             ViafirmaClientFactory.init("https://testservices.viafirma.com/viafirma/", "https://testservices.viafirma.com/viafirma/");
             ViafirmaClient viafirmaClient = ViafirmaClientFactory.getInstance();
             // Iniciamos la autenticación indicando la uri de retorno.
-            viafirmaClient.solicitarAutenticacion(request, response, "/ViafirmaResponseServlet");
+            viafirmaClient.solicitarAutenticacion(request, response, "/RespuestaViafirmaServlet");
         } catch (InternalException e) {
             throw new ServletException(e.getMessage());
         }

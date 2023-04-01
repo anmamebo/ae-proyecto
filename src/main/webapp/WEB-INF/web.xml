@@ -5,16 +5,16 @@
         <servlet-class>com.ae.ae.proyecto.SolicitarAutenticacionViafirmaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViafirmaResponseServlet</servlet-name>
-        <servlet-class>com.ae.ae.proyecto.ViafirmaResponseServlet</servlet-class>
+        <servlet-name>RespuestaViafirmaServlet</servlet-name>
+        <servlet-class>com.ae.ae.proyecto.RespuestaViafirmaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SolicitarAutenticacionViafirmaServlet</servlet-name>
         <url-pattern>/SolicitarAutenticacionViafirmaServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViafirmaResponseServlet</servlet-name>
-        <url-pattern>/ViafirmaResponseServlet</url-pattern>
+        <servlet-name>RespuestaViafirmaServlet</servlet-name>
+        <url-pattern>/RespuestaViafirmaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
