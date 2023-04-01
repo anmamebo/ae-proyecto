@@ -11,7 +11,8 @@
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
+        <viafirmaClientVersion>2.17.0</viafirmaClientVersion>
     </properties>
     
     <dependencies>
@@ -21,8 +22,36 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.viafirma</groupId>
+            <artifactId>viafirma-client</artifactId>
+            <version>${viafirmaClientVersion}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcpkix-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>1.46</version>
+        </dependency>
     </dependencies>
     
+    <repositories>
+        <repository>
+            <id>Viavansi</id>
+            <name>Viavansi Repositorio</name>
+            <url>https://repositorio.viavansi.com/repo</url>
+            <releases></releases>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
