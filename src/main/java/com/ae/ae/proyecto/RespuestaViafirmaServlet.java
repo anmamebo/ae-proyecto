@@ -20,6 +20,7 @@ import org.viafirma.cliente.vo.UsuarioGenericoViafirma;
  */
 public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
 
+    @Override
     public void signOK(FirmaInfoViafirma firma, HttpServletRequest request,
             HttpServletResponse response) {
         /* Lógica específica de la aplicación para gestionar el resultado de la firma */
@@ -33,6 +34,7 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
         }
     }
 
+    @Override
     public void authenticateOK(UsuarioGenericoViafirma usuario, HttpServletRequest request, HttpServletResponse response) {
 // Lógica específica de cada aplicación para gestionar el resultado de la autenticación
         try {
@@ -46,6 +48,7 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
         }
     }
 
+    @Override
     public void cancel(HttpServletRequest request, HttpServletResponse response) {
 // Gestión de cancelación del usuario al autenticar o firmar
         try {
@@ -58,6 +61,7 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
         }
     }
 
+    @Override
     public void error(CodigoError codError, HttpServletRequest request, HttpServletResponse response) {
 // Gestión de error al autenticar o firmar
         try {

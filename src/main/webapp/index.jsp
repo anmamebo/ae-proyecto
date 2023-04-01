@@ -16,9 +16,15 @@
         <jsp:include page="./header.jsp" />
 
         <main class="container-fluid">
-            <form action="SolicitarAutenticacionViafirmaServlet">
-                <input class="btn btn-dark" type="submit" value="Acceder con Certificado Digital">
-            </form>
+            <%if (session.getAttribute("usuarioAutenticado") != null) {%>
+            <a href="formulario.jsp" class="btn btn-dark">
+                Rellenar formulario
+            </a>
+            <%} else {%>
+            <a href="SolicitarAutenticacionViafirmaServlet" class="btn btn-dark">
+                Acceder con Certificado Digital
+            </a>
+            <%}%>
         </main>
     </body>
 </html>
