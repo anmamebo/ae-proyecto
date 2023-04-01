@@ -5,17 +5,21 @@
 package com.ae.ae.proyecto;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.viafirma.cliente.ViafirmaClient;
+import org.viafirma.cliente.ViafirmaClientFactory;
+import org.viafirma.cliente.exception.InternalException;
 
 /**
  *
- * @author anmam
+ * @author Antonio Manuel Mérida Borrero
  */
-public class SolicitarAutenticacionServlet extends HttpServlet {
+public class SolicitarAutenticacionViafirmaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -25,22 +29,20 @@ public class SolicitarAutenticacionServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws org.viafirma.cliente.exception.InternalException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SolicitarAutenticacionServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SolicitarAutenticacionServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            throws ServletException, IOException, InternalException {
+
+        try {
+            ViafirmaClientFactory.init("https://testservices.viafirma.com/viafirma/", "https://testservices.viafirma.com/viafirma/");
+            ViafirmaClient viafirmaClient = ViafirmaClientFactory.getInstance();
+            // Iniciamos la autenticación indicando la uri de retorno.
+            viafirmaClient.solicitarAutenticacion(request, response, "/ViafirmaResponseServlet");
+        } catch (InternalException e) {
+            throw new ServletException(e.getMessage());
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +57,11 @@ public class SolicitarAutenticacionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (InternalException ex) {
+            Logger.getLogger(SolicitarAutenticacionViafirmaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -69,7 +75,11 @@ public class SolicitarAutenticacionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (InternalException ex) {
+            Logger.getLogger(SolicitarAutenticacionViafirmaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
