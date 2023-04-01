@@ -24,9 +24,11 @@
                     </div>
                     <!-- CERRAR SESIÓN -->
                     <div class="col-4 text-end">
-                        <a href="#" class="link-dark text-decoration-none">
+                        <%if (session.getAttribute("usuarioAutenticado") != null) {%>
+                        <a href="CerrarSesionServlet" class="link-dark text-decoration-none">
                             Cerrar sesión
                         </a>
+                        <%}%>
                     </div>
                 </div>
             </div>

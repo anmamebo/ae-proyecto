@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.viafirma.cliente.ViafirmaClientServlet;
 import org.viafirma.cliente.exception.CodigoError;
 import org.viafirma.cliente.vo.FirmaInfoViafirma;
@@ -35,7 +36,8 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
     public void authenticateOK(UsuarioGenericoViafirma usuario, HttpServletRequest request, HttpServletResponse response) {
 // Lógica específica de cada aplicación para gestionar el resultado de la autenticación
         try {
-            request.setAttribute("usuarioAutenticado", usuario);
+            HttpSession session = request.getSession();
+            session.setAttribute("usuarioAutenticado", usuario);
             request.getRequestDispatcher("/formulario.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();

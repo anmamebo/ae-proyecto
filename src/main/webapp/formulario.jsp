@@ -16,7 +16,7 @@
     <body>
         <!-- Comprobación usuario autenticado -->
         <%
-            if (request.getAttribute("usuarioAutenticado") == null) {
+            if (session.getAttribute("usuarioAutenticado") == null) {
                 response.sendRedirect("index.jsp");
             }
         %>
@@ -31,11 +31,11 @@
             <%} else { %>
             <form>
                 <label>Nombre:</label>
-                <input type="text" value="${usuarioAutenticado.firstName}" disabled>
+                <input type="text" value="${sessionScope.usuarioAutenticado.firstName}" disabled>
                 <label>Apellidos:</label>
-                <input type="text" value="${usuarioAutenticado.lastName}" disabled>
+                <input type="text" value="${sessionScope.usuarioAutenticado.lastName}" disabled>
                 <label>DNI:</label>
-                <input type="text" value="${usuarioAutenticado.numberUserId}" disabled>
+                <input type="text" value="${sessionScope.usuarioAutenticado.numberUserId}" disabled>
 
                 <br>
 
