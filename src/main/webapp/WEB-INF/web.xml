@@ -12,6 +12,14 @@
         <servlet-name>CerrarSesionServlet</servlet-name>
         <servlet-class>com.ae.ae.proyecto.CerrarSesionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GenerarPDFServlet</servlet-name>
+        <servlet-class>com.ae.ae.proyecto.GenerarPDFServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FirmarPDFServlet</servlet-name>
+        <servlet-class>com.ae.ae.proyecto.FirmarPDFServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SolicitarAutenticacionViafirmaServlet</servlet-name>
         <url-pattern>/SolicitarAutenticacionViafirmaServlet</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenerarPDFServlet</servlet-name>
+        <url-pattern>/GenerarPDFServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FirmarPDFServlet</servlet-name>
+        <url-pattern>/FirmarPDFServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
