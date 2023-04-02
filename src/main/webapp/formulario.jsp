@@ -29,18 +29,18 @@
             <%if (request.getAttribute("error") != null) {%>
             <p class="message error">${error}. Operación cancelada</p>
             <%} else { %>
-            <form>
-                <label>Nombre:</label>
-                <input type="text" value="${sessionScope.usuarioAutenticado.firstName}" disabled>
-                <label>Apellidos:</label>
-                <input type="text" value="${sessionScope.usuarioAutenticado.lastName}" disabled>
-                <label>DNI:</label>
-                <input type="text" value="${sessionScope.usuarioAutenticado.numberUserId}" disabled>
+            <form id="formulario" method="post" action="GenerarPDFServlet">
+                <label for="nombreInput">Nombre:</label>
+                <input type="text" id="nombreInput" name="nombre" value="${sessionScope.usuarioAutenticado.firstName}" readonly>
+                <label for="apellidosInput">Apellidos:</label>
+                <input type="text" id="apellidosInput" name="apellidos" value="${sessionScope.usuarioAutenticado.lastName}" readonly>
+                <label for="dniInput">DNI:</label>
+                <input type="text" id="dniInput" name="dni" value="${sessionScope.usuarioAutenticado.numberUserId}" readonly>
 
                 <br>
 
-                <input type="checkbox" id="checkbox1" name="" value="1">
-                <label for="checkbox1">Consiente la verificación de identidad.</label>
+                <input type="checkbox" id="checkbox" name="verificacionIdentidad" value="si">
+                <label for="checkbox">Consiente la verificación de identidad.</label>
 
                 <br>
 
