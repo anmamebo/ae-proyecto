@@ -36,11 +36,11 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
 
     @Override
     public void authenticateOK(UsuarioGenericoViafirma usuario, HttpServletRequest request, HttpServletResponse response) {
-// Lógica específica de cada aplicación para gestionar el resultado de la autenticación
+        // Lógica específica de cada aplicación para gestionar el resultado de la autenticación
         try {
             HttpSession session = request.getSession();
             session.setAttribute("usuarioAutenticado", usuario);
-            request.getRequestDispatcher("/formulario.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -50,10 +50,10 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
 
     @Override
     public void cancel(HttpServletRequest request, HttpServletResponse response) {
-// Gestión de cancelación del usuario al autenticar o firmar
+        // Gestión de cancelación del usuario al autenticar o firmar
         try {
             request.setAttribute("error", "El usuario ha cancelado la autenticación");
-            request.getRequestDispatcher("/formulario.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,10 +63,10 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
 
     @Override
     public void error(CodigoError codError, HttpServletRequest request, HttpServletResponse response) {
-// Gestión de error al autenticar o firmar
+        // Gestión de error al autenticar o firmar
         try {
             request.setAttribute("codError", codError);
-            request.getRequestDispatcher("/formulario.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {

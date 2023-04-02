@@ -33,7 +33,7 @@ public class CerrarSesionServlet extends HttpServlet {
         
         session.removeAttribute("usuarioAutenticado");
         
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
         
     }
 

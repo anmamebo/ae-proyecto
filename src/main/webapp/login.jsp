@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 30-mar-2023, 20:56:09
-    Author     : Antonio Manuel Mérida Borrero
+    Document   : login
+    Created on : 03-abr-2023, 1:17:21
+    Author     : anmam
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,13 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Inicio | CertiSign</title>
+        <title>LogIn | CertiSign</title>
     </head>
     <body>
         <!-- Comprobación usuario autenticado -->
         <%
-        if (session.getAttribute("usuarioAutenticado") == null) {
-            response.sendRedirect("login.jsp");
+        if (session.getAttribute("usuarioAutenticado") != null) {
+            response.sendRedirect("index.jsp");
         }
         %>
         
@@ -24,9 +24,8 @@
 
         <main class="container my-5">
             <div id="buttonContainer" class="row align-items-center justify-content-center text-center bg-body-tertiary p-5 rounded-3">
-                <h2 class="col-12">Procedimientos disponibles</h2>
-                <a href="formulario.jsp" class="col-3 mt-4 btn btn-dark">
-                    Formulario Beca CertiSign
+                <a href="SolicitarAutenticacionViafirmaServlet" class="col-3 btn btn-dark">
+                    Acceder con Certificado Digital
                 </a>
             </div>
         </main>

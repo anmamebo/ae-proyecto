@@ -16,7 +16,7 @@
         <!-- Comprobación usuario autenticado -->
         <%
         if (session.getAttribute("usuarioAutenticado") == null) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("login.jsp");
         }
         %>
 
@@ -26,7 +26,7 @@
         <main class="container">
             <div id="formContainer" class="row bg-body-tertiary p-5 rounded-3">
                 <div class="col-12 border-bottom">
-                    <h2>Formulario</h2>
+                    <h2>Formulario Beca CertiSign</h2>
                 </div>
                 <div class="col-12 mt-5">
                     <%if (request.getAttribute("error") != null) {%>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-12">
                             <p>
-                                Deseo participar en el procedimiento de PRUEBA, a tal efecto firmo este documento.
+                                Deseo participar en el procedimiento de la Beca CertiSign, a tal efecto firmo este documento.
                             </p>
                         </div>
                         
