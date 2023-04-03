@@ -134,6 +134,10 @@ public class GenerarPDFServlet extends HttpServlet {
         String cursoYEstudios = request.getParameter("estudios");
         form.setEstudios(FormularioUtils.generarEstudios(nombreUniversidad, cursoYEstudios));
         
+        String[] dniFamiliares = request.getParameterValues("dniFamiliares[]");
+        String[] nombreFamiliares = request.getParameterValues("nombreFamiliares[]");
+        form.setFamiliares(FormularioUtils.generarFamiliares(dniFamiliares, nombreFamiliares));
+        
         String familiaNumerosa = request.getParameter("familiaNumerosa");
         form.setFamiliaNumerosa(FormularioUtils.generarFamiliaNumerosa(familiaNumerosa));
         String independiente = request.getParameter("independiente");

@@ -6,12 +6,15 @@ package com.ae.ae.proyecto.utils;
 
 import com.ae.ae.proyecto.modelos.Direccion;
 import com.ae.ae.proyecto.modelos.Estudios;
+import com.ae.ae.proyecto.modelos.Familiar;
 import com.ae.ae.proyecto.modelos.Iban;
 import com.ae.ae.proyecto.modelos.Persona;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,5 +94,16 @@ public class FormularioUtils {
     
     public static boolean generarConsentimiento(String consentimiento) {
         return "si".equals(consentimiento);
+    }
+    
+    public static List<Familiar> generarFamiliares(String[] dniFamiliares, String[] nombreFamiliares) {
+        List<Familiar> familiares = new ArrayList<>();
+        
+        for (int i = 0; i < dniFamiliares.length; i++) {
+            Familiar f = new Familiar(dniFamiliares[i], nombreFamiliares[i]);
+            familiares.add(f);
+        }
+        
+        return familiares;
     }
 }
