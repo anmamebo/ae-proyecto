@@ -4,6 +4,8 @@
  */
 package com.ae.ae.proyecto;
 
+import com.ae.ae.proyecto.modelos.Formulario;
+import com.ae.ae.proyecto.utils.FormularioUtils;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -16,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.viafirma.cliente.vo.UsuarioGenericoViafirma;
 
 /**
@@ -36,42 +37,37 @@ public class GenerarPDFServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         if (request.getMethod().equalsIgnoreCase("POST")) {
-            HttpSession session = request.getSession();
-            UsuarioGenericoViafirma usuario = (UsuarioGenericoViafirma) session.getAttribute("usuarioAutenticado");
-            
-            String nombre = usuario.getFirstName();
-            String apellidos = usuario.getLastName();
-            String dni = usuario.getNumberUserId();
-            String verificacionIdentidad = request.getParameter("verificacionIdentidad");
+
+            Formulario form = this.procesarFormulario(request, (UsuarioGenericoViafirma) request.getSession().getAttribute("usuarioAutenticado"));
             
             // Se crea una ubicación temporal y se guarda un objeto Path
             Path pdfPath = Files.createTempFile("temp_", ".pdf").toAbsolutePath();
-            
+
             // Se crea para escribir el archivo PDF
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            
+
             // Se crea el responsable de escribir el contenido en el PDF
             PdfWriter writer = new PdfWriter(outputStream);
             // Se crea el objeto que representa el contenido del archivo PDF
             PdfDocument pdf = new PdfDocument(writer);
-            
+
             // Se crea el documento PDF en sí
             try (Document document = new Document(pdf)) {
-                document.add(new Paragraph(nombre + " " + apellidos + " " + dni + " " + verificacionIdentidad));
+                document.add(new Paragraph(form.getDatosPersonales().getNombre() + " " + form.getDatosPersonales().getApellidos() + " " + form.getDatosPersonales().getDni() + " " + form.isConsentimiento()));
             }
-            
+
             // Se convierte el contenido del ByteArrayOutputStream en un vector de bytes.
             byte[] pdfBytes = outputStream.toByteArray();
             // Los bytes del archivo PDF se escriben en el archivo temporal.
             Files.write(pdfPath, pdfBytes);
-            
+
             // Se redirige al usuario al servlet donde se firmará el archivo pdf
             String urlFirma = request.getContextPath() + "/FirmarPDFServlet?pdf=" + pdfPath.toString().replace("\\", "/");
             response.sendRedirect(urlFirma);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -113,4 +109,47 @@ public class GenerarPDFServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private Formulario procesarFormulario(HttpServletRequest request, UsuarioGenericoViafirma usuario) {
+        Formulario form = new Formulario();
+
+        String nombre = usuario.getFirstName();
+        String apellidos = usuario.getLastName();
+        String dni = usuario.getNumberUserId();
+        String fNacimiento = request.getParameter("fechaNacimiento");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        form.setDatosPersonales(FormularioUtils.generarPersona(nombre, apellidos, dni, fNacimiento, email, telefono));
+        
+        String calle = request.getParameter("calle");
+        String numeroCalle = request.getParameter("numeroCalle");
+        String codigoPostal = request.getParameter("codigoPostal");
+        String ciudad = request.getParameter("ciudad");
+        String provincia = request.getParameter("provincia");
+        form.setDireccion(FormularioUtils.generarDireccion(calle, numeroCalle, codigoPostal, ciudad, provincia));
+        
+        String tieneTitulo = request.getParameter("tieneTitulo");
+        form.setTieneTitulo(FormularioUtils.generarTieneTitulo(tieneTitulo));
+        
+        String nombreUniversidad = request.getParameter("universidad");
+        String cursoYEstudios = request.getParameter("estudios");
+        form.setEstudios(FormularioUtils.generarEstudios(nombreUniversidad, cursoYEstudios));
+        
+        String familiaNumerosa = request.getParameter("familiaNumerosa");
+        form.setFamiliaNumerosa(FormularioUtils.generarFamiliaNumerosa(familiaNumerosa));
+        String independiente = request.getParameter("independiente");
+        form.setIndependiente(FormularioUtils.generarIndependiente(independiente));
+        String orfandad = request.getParameter("orfandad");
+        form.setOrfandad(FormularioUtils.generarOrfandad(orfandad));
+        
+        String paisIban = request.getParameter("paisIban");
+        String digitosControlIban = request.getParameter("dControlIban");
+        String numeroCuentaIban = request.getParameter("nCuentaIban");
+        form.setIban(FormularioUtils.generarIban(paisIban, digitosControlIban, numeroCuentaIban));
+        
+        
+        String verificacionIdentidad = request.getParameter("verificacionIdentidad");
+        form.setConsentimiento(FormularioUtils.generarConsentimiento(verificacionIdentidad));
+
+        return form;
+    }
 }
