@@ -53,7 +53,7 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
         // Gestión de cancelación del usuario al autenticar o firmar
         try {
             request.setAttribute("error", "El usuario ha cancelado la autenticación");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/formulario.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -66,7 +66,7 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
         // Gestión de error al autenticar o firmar
         try {
             request.setAttribute("codError", codError);
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/formulario.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
