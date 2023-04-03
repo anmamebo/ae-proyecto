@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.viafirma.cliente.vo.UsuarioGenericoViafirma;
 
 /**
  *
@@ -36,9 +38,12 @@ public class GenerarPDFServlet extends HttpServlet {
             throws ServletException, IOException {
         
         if (request.getMethod().equalsIgnoreCase("POST")) {
-            String nombre = request.getParameter("nombre");
-            String apellidos = request.getParameter("apellidos");
-            String dni = request.getParameter("dni");
+            HttpSession session = request.getSession();
+            UsuarioGenericoViafirma usuario = (UsuarioGenericoViafirma) session.getAttribute("usuarioAutenticado");
+            
+            String nombre = usuario.getFirstName();
+            String apellidos = usuario.getLastName();
+            String dni = usuario.getNumberUserId();
             String verificacionIdentidad = request.getParameter("verificacionIdentidad");
             
             // Se crea una ubicación temporal y se guarda un objeto Path
