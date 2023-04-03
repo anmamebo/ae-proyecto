@@ -70,7 +70,7 @@ public class FirmarPDFServlet extends HttpServlet {
             policy.setTypeSign(typeSign);
 
             // Generamos nombre pdf
-            String nombrePdf = generarNombrePdf(request);
+            String nombrePdf = this.generarNombrePdf(request);
 
             // Generamos el objeto documento, donde incluiremos el byte[] del fichero a firmar
             Documento documento = new Documento(nombrePdf, datosAFirmar, typeFile, format);
