@@ -57,6 +57,8 @@ public class GenerarPDFServlet extends HttpServlet {
             // Se crea el documento PDF en sí
             try (Document document = new Document(pdf)) {
                 DocumentoUtils.construirDocumentoFormulario(document, form);
+                
+                document.close();
             }
 
             // Se convierte el contenido del ByteArrayOutputStream en un vector de bytes.
