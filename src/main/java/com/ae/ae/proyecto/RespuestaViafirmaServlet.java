@@ -39,13 +39,18 @@ public class RespuestaViafirmaServlet extends ViafirmaClientServlet {
 
             ViafirmaClient viafirmaClient = ViafirmaClientFactory.getInstance();
             byte[] pdfGenerado = viafirmaClient.getOriginalDocument(firma.getSignId()).getDatos();
+            
+            response.setContentType("application/pdf");
+            String headerKey = "Content-Disposition";
+            String headerValue = "inline; filename=COMPROBANTE-" + viafirmaClient.getOriginalDocument(firma.getSignId()).getNombre();
+            response.setHeader(headerKey, headerValue);
 
             PdfDocument pdf = new PdfDocument(new PdfReader(new ByteArrayInputStream(pdfGenerado)), new PdfWriter(response.getOutputStream()).setSmartMode(true));
 
             try (Document document = new Document(pdf)) {
-                
+
                 DocumentoUtils.construirDocumentoComprobanteFirma(document, firma, pdf);
-                
+
                 document.close();
             }
 
