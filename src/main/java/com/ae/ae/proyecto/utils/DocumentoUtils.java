@@ -5,11 +5,16 @@
 package com.ae.ae.proyecto.utils;
 
 import com.ae.ae.proyecto.modelos.Formulario;
+import com.itextpdf.barcodes.BarcodeQRCode;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
@@ -18,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.viafirma.cliente.vo.FirmaInfoViafirma;
 
 /**
  *
@@ -117,11 +123,9 @@ public class DocumentoUtils {
         Paragraph telefonoMovilParrafo = new Paragraph(telefonoMovilTexto);
         doc.add(telefonoMovilParrafo);
 
-        
-        
         // TIENE TÍTULO
         doc.add(new Paragraph("Estudios:").setBold());
-        
+
         String tieneTitulo = form.isTieneTitulo() ? "Sí" : "No";
         String tieneTituloTexto = "Título Universitario o de Grado Superior: " + tieneTitulo;
         Paragraph tieneTituloParrafo = new Paragraph(tieneTituloTexto);
@@ -160,60 +164,87 @@ public class DocumentoUtils {
                 + "en fechas diferentes (cuantía fija, posibles aumentos de cuantía y/o diversos pagos en concepto de cuantía variable).";
         Paragraph datosIbanInfoParrafo = new Paragraph(datosIbanInfoTexto);
         doc.add(datosIbanInfoParrafo);
-        
+
         Table tableIban = new Table(new float[12]).useAllAvailableWidth();
-        
+
         Cell c1 = new Cell(1, 2);
         c1.setPadding(5);
         c1.setTextAlignment(TextAlignment.CENTER);
         c1.setBorder(Border.NO_BORDER);
         c1.add(new Paragraph("País:"));
         tableIban.addCell(c1);
-        
+
         Cell c2 = new Cell(1, 2);
         c2.setPadding(5);
         c2.setTextAlignment(TextAlignment.CENTER);
         c2.add(new Paragraph(form.getIban().getPaisIban()));
         tableIban.addCell(c2);
-        
+
         Cell c3 = new Cell(1, 2);
         c3.setPadding(5);
         c3.setTextAlignment(TextAlignment.CENTER);
         c3.setBorder(Border.NO_BORDER);
         c3.add(new Paragraph("Digitos control:"));
         tableIban.addCell(c3);
-        
+
         Cell c4 = new Cell(1, 2);
         c4.setPadding(5);
         c4.setTextAlignment(TextAlignment.CENTER);
         c4.add(new Paragraph(form.getIban().getDigitosControlIban()));
         tableIban.addCell(c4);
-        
+
         Cell c5 = new Cell(1, 2);
         c5.setPadding(5);
         c5.setTextAlignment(TextAlignment.CENTER);
         c5.setBorder(Border.NO_BORDER);
         c5.add(new Paragraph("Nº de cuenta:"));
         tableIban.addCell(c5);
-        
+
         Cell c6 = new Cell(1, 2);
         c6.setPadding(5);
         c6.setTextAlignment(TextAlignment.CENTER);
         c6.add(new Paragraph(form.getIban().getNumeroCuentaIban()));
-        tableIban.addCell(c6);       
-        
+        tableIban.addCell(c6);
+
         doc.add(tableIban);
-        
+
         // DATOS FAMILIARES CON REPERCUSIÓN ECONÓMICA
         doc.add(new Paragraph("Datos familiares con repercusión económica:").setBold());
-        
+
         String familiaNumerosa = form.isFamiliaNumerosa() ? "Sí" : "No";
         doc.add(new Paragraph("Condición de familia numerosa: " + familiaNumerosa));
-        
+
         String independiente = form.isIndependiente() ? "Sí" : "No";
         doc.add(new Paragraph("Independiente: " + independiente));
-        
+
         String orfandad = form.isOrfandad() ? "Sí" : "No";
         doc.add(new Paragraph("Orfandad absoluta: " + orfandad));
+    }
+
+    public static void construirDocumentoComprobanteFirma(Document doc, FirmaInfoViafirma firma, PdfDocument pdf) {
+        String url = "https://testservices.viafirma.com/viafirma/v/" + firma.getSignId();
+        BarcodeQRCode barcodeQRCode = new BarcodeQRCode(url);
+        PdfFormXObject pdfFormXObject = barcodeQRCode.createFormXObject(ColorConstants.BLACK, pdf);
+        Image qrCodeImage = new Image(pdfFormXObject).scaleToFit(50, 50);
+
+        Table table = new Table(new float[12]).useAllAvailableWidth();
+        table.setMarginTop(680);
+        table.setMarginBottom(0);
+
+        Cell cell = new Cell(1, 4);
+        cell.setTextAlignment(TextAlignment.LEFT);
+        cell.setPadding(5);
+        cell.add(qrCodeImage);
+        cell.setBorder(Border.NO_BORDER);
+        table.addCell(cell);
+
+        Cell cell2 = new Cell(1, 8);
+        cell2.setTextAlignment(TextAlignment.LEFT);
+        cell2.setPadding(5);
+        cell2.add(new Paragraph("Firmado por: " + firma.getFirstName() + " " + firma.getLastName() + " - " + firma.getNumberUserId()));
+        cell2.add(new Paragraph("Puede comprobar el documento firmado en: " + url));
+        table.addCell(cell2);
+
+        doc.add(table);
     }
 }
