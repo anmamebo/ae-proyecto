@@ -5,11 +5,11 @@
 package com.ae.ae.proyecto;
 
 import com.ae.ae.proyecto.modelos.Formulario;
+import com.ae.ae.proyecto.utils.DocumentoUtils;
 import com.ae.ae.proyecto.utils.FormularioUtils;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,11 +37,12 @@ public class GenerarPDFServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
         if (request.getMethod().equalsIgnoreCase("POST")) {
 
             Formulario form = this.procesarFormulario(request, (UsuarioGenericoViafirma) request.getSession().getAttribute("usuarioAutenticado"));
-            
+
             // Se crea una ubicación temporal y se guarda un objeto Path
             Path pdfPath = Files.createTempFile("temp_", ".pdf").toAbsolutePath();
 
@@ -55,7 +56,7 @@ public class GenerarPDFServlet extends HttpServlet {
 
             // Se crea el documento PDF en sí
             try (Document document = new Document(pdf)) {
-                document.add(new Paragraph(form.getDatosPersonales().getNombre() + " " + form.getDatosPersonales().getApellidos() + " " + form.getDatosPersonales().getDni() + " " + form.isConsentimiento()));
+                DocumentoUtils.construirDocumentoFormulario(document, form);
             }
 
             // Se convierte el contenido del ByteArrayOutputStream en un vector de bytes.
@@ -119,38 +120,37 @@ public class GenerarPDFServlet extends HttpServlet {
         String email = request.getParameter("email");
         String telefono = request.getParameter("telefono");
         form.setDatosPersonales(FormularioUtils.generarPersona(nombre, apellidos, dni, fNacimiento, email, telefono));
-        
+
         String calle = request.getParameter("calle");
         String numeroCalle = request.getParameter("numeroCalle");
         String codigoPostal = request.getParameter("codigoPostal");
         String ciudad = request.getParameter("ciudad");
         String provincia = request.getParameter("provincia");
         form.setDireccion(FormularioUtils.generarDireccion(calle, numeroCalle, codigoPostal, ciudad, provincia));
-        
+
         String tieneTitulo = request.getParameter("tieneTitulo");
         form.setTieneTitulo(FormularioUtils.generarTieneTitulo(tieneTitulo));
-        
+
         String nombreUniversidad = request.getParameter("universidad");
         String cursoYEstudios = request.getParameter("estudios");
         form.setEstudios(FormularioUtils.generarEstudios(nombreUniversidad, cursoYEstudios));
-        
+
         String[] dniFamiliares = request.getParameterValues("dniFamiliares[]");
         String[] nombreFamiliares = request.getParameterValues("nombreFamiliares[]");
         form.setFamiliares(FormularioUtils.generarFamiliares(dniFamiliares, nombreFamiliares));
-        
+
         String familiaNumerosa = request.getParameter("familiaNumerosa");
         form.setFamiliaNumerosa(FormularioUtils.generarFamiliaNumerosa(familiaNumerosa));
         String independiente = request.getParameter("independiente");
         form.setIndependiente(FormularioUtils.generarIndependiente(independiente));
         String orfandad = request.getParameter("orfandad");
         form.setOrfandad(FormularioUtils.generarOrfandad(orfandad));
-        
+
         String paisIban = request.getParameter("paisIban");
         String digitosControlIban = request.getParameter("dControlIban");
         String numeroCuentaIban = request.getParameter("nCuentaIban");
         form.setIban(FormularioUtils.generarIban(paisIban, digitosControlIban, numeroCuentaIban));
-        
-        
+
         String verificacionIdentidad = request.getParameter("verificacionIdentidad");
         form.setConsentimiento(FormularioUtils.generarConsentimiento(verificacionIdentidad));
 
