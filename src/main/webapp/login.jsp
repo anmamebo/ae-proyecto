@@ -24,7 +24,7 @@
 
         <main class="container my-5">
             <div id="buttonContainer" class="row align-items-center justify-content-center text-center bg-body-tertiary p-5 rounded-3">
-                <a href="SolicitarAutenticacionViafirmaServlet" class="col-3 btn btn-dark">
+                <a href="SolicitarAutenticacionViafirmaServlet" class="col-md-3 btn btn-dark">
                     Acceder con Certificado Digital
                 </a>
             </div>

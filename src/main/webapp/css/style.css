@@ -13,5 +13,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 #buttonContainer,
 #formContainer {
-    /*height: inherit;*/
+    min-height: inherit;
 }

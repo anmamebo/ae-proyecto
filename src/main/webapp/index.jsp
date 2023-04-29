@@ -25,7 +25,7 @@
         <main class="container my-5">
             <div id="buttonContainer" class="row align-items-center justify-content-center text-center bg-body-tertiary p-5 rounded-3">
                 <h2 class="col-12">Procedimientos disponibles</h2>
-                <a href="formulario.jsp" class="col-3 mt-4 btn btn-dark">
+                <a href="formulario.jsp" class="col-md-3 mt-4 btn btn-dark">
                     Formulario Beca CertiSign
                 </a>
             </div>
