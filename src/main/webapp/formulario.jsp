@@ -65,7 +65,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="telefonoInput" class="form-label">Teléfono Móvil:</label>
-                            <input type="text" id="telefonoInput" class="form-control" name="telefono" value="627660577">    
+                            <input type="text" id="telefonoInput" class="form-control" name="telefono" value="627829361">    
                         </div>
                         
                         <!-- DOMICILIO -->
@@ -74,11 +74,11 @@
                         </div>
                         <div class="col-md-6">
                             <label for="calleInput" class="form-label">Calle:</label>
-                            <input type="text" id="calleInput" class="form-control" name="calle" value="Santa Bárbara">    
+                            <input type="text" id="calleInput" class="form-control" name="calle" value="Avenida de Andalucía">    
                         </div>
                         <div class="col-md-3">
                             <label for="numeroCalleInput" class="form-label">Nº:</label>
-                            <input type="text" id="numeroCalleInput" class="form-control" name="numeroCalle" value="50">    
+                            <input type="text" id="numeroCalleInput" class="form-control" name="numeroCalle" value="12">    
                         </div>
                         <div class="col-md-3">
                             <label for="cpInput" class="form-label">Código Postal:</label>
@@ -182,7 +182,7 @@
                             <label for="nombreFamiliaresInput" class="form-label">Nombre:</label>
                             <div id="nombreFamiliaresInput">
                                 <div class="mb-2">
-                                    <input type="text" class="form-control" name="nombreFamiliares[]" id="nombreFamiliares" value="Carmen Elena Borrero Alamillo">
+                                    <input type="text" class="form-control" name="nombreFamiliares[]" id="nombreFamiliares" value="Juan Carlos Mérida Sánchez">
                                 </div>
                             </div>
                         </div>
